@@ -42,4 +42,4 @@ for img in images:
 
 contact_sheet = contact_sheet.resize((int(contact_sheet.width / 2), int(contact_sheet.height / 2)))
 contact_sheet.show()
-
+contact_sheet.save("colored_image.jpg")
