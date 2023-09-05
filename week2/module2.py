@@ -56,3 +56,34 @@ print(src)
 # This goes to a wiki page which describes how to call the tesseract executable, and as we read down we see
 # that we can actually have tesseract use multiple languages in its detection, such as English and Hindi, by
 # passing them in as "eng+hin". Very cool.
+
+# One last thing to mention - the image_to_string() function takes in an "image", but the docs don't
+# really describe what this image is underneath. Is it a string to an image file? A PILLOW image?
+# Something else?
+#
+# Again we have to sleuth (and/or experiment) to understand what we should do. If we look at the source
+# code for the pytesseract library, we see that there is a function called run_and_get_output(). Here's
+# a link to that function on the author's github account:
+# https://github.com/madmaze/pytesseract/blob/d1596f7f59a517ad814b7d810ccdef7d33763221/src/pytesseract.py#L199
+#
+# In this function we see that one of the first things which happens is the image is saved through
+# the save_image() function. Here's that line of code:
+# https://github.com/madmaze/pytesseract/blob/d1596f7f59a517ad814b7d810ccdef7d33763221/src/pytesseract.py#L116
+#
+# And we see there that another function is called, prepare(image), which actually loads the image as a
+# PILLOW image file. So yes, sending a PIL image file is appropriate use for this function! It sure would
+# have been useful for the author to have included this information in reStructuredText to help us not have
+# to dig through the implementation. But, this is an open source project -- maybe you would like to contribute
+# back better documentation?
+#
+# Hint: The doc line we needed was :param image: A PIL Image.Image file or an ndarray of bytes
+#
+# In the end, we often don't do this full level of investigation, and we just experiment and try things. It
+# seems likely that a PIL Image.Image would work, given how well known PIL is in the python world. But still,
+# as you explore and use different libraries you'll see a breadth of different documentation norms, so it's
+# useful to know how to explore the source code. And now that you're at the end of this course, you've got
+# the skills to do so!
+#
+# Ok, lets try and run tesseract on this image
+text = pytesseract.image_to_string(image)
+print(text)
