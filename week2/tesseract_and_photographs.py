@@ -7,4 +7,4 @@ import pytesseract
 image=Image.open('storefront.jpg')
 image.show()
 # Finally, lets try and run tesseract on that image and see what the results are
-pytesseract.image_to_string(image)
+print(pytesseract.image_to_string(image))
