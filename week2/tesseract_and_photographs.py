@@ -21,5 +21,27 @@ bounding_box = (315, 170, 700, 270)
 title_image = image.crop(bounding_box)
 
 # display and pull out the text
-title_image.show()
-print(pytesseract.image_to_string(title_image))
+# title_image.show()
+# print(pytesseract.image_to_string(title_image))
+
+# new bounding box
+bounding_box = (900, 420, 940, 445)
+
+# cropping smaller version
+smaller_size = image.crop(bounding_box)
+
+# display the image
+# smaller_size.show()
+
+# image to string with pytesseract inside function
+# print(pytesseract.image_to_string(smaller_sign))
+
+# trying to resize the image
+new_size = (smaller_size.width * 10, smaller_size.height * 10)
+
+# checking documentations for resize function
+print(help(smaller_size.resize))
+
+# We can see that there are a number of different filters for resizing the image. The
+# default is Image.NEAREST. Lets see what that looks like
+smaller_size.resize(new_size, Image.NEAREST).show()
