@@ -48,4 +48,38 @@ line_height = calculate_line_height(Image.open("two_col.png"))
 # print(line_height)
 
 gap_box = (0, 0, char_width, line_height*6)
-print(gap_box)
+# print(gap_box)
+
+
+def gap_check(img, location):
+    for x in range(location[0], location[0] + gap_box[2]):
+        for y in range(location[1], location[1] + gap_box[3]):
+            if x < img.width and y < img.height:
+                if img.getpixel((x, y)) != 255:
+                    return False
+
+    return True
+
+
+def draw_sep(img, location):
+    from PIL import ImageDraw
+    drawing_object = ImageDraw.Draw(img)
+    x1 = location[0] + int(gap_box[2] / 2)
+    x2 = x1
+    y1 = location[1]
+    y2 = y1 + gap_box[3]
+    drawing_object.rectangle((x1, y1, x2, y2), fill='black', outline='black')
+
+
+def process_image(img):
+    for x in range(img.width):
+        for y in range(img.height):
+            if gap_check(img, (x, y)):
+                draw_sep(img, (x, y))
+    return img
+
+
+i = Image.open("two_col.png").convert('L')
+i = process_image(i)
+# i.show()
+show_boxes(i).show()
