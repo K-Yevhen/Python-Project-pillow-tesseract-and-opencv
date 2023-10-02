@@ -22,7 +22,7 @@ def show_boxes(img):
     drawing_object = ImageDraw.Draw(img)
     # We can create a set of boxes using pageseg.segment
     bw_im = binarization.nlbin(img)
-    bounding_boxes = pageseg.segment(bw_im)['boxes']
+    bounding_boxes = pageseg.segment(bw_im, black_colseps=True)['boxes']
     # Now lets go through the list of bounding boxes
     for box in bounding_boxes:
         # An just draw a nice rectangle
@@ -30,4 +30,22 @@ def show_boxes(img):
     # And to make it easy, lets return the image object
     return img
 
-print(show_boxes(Image.open('two_col.png')).show())
+# print(show_boxes(Image.open('two_col.png')).show())
+
+char_width = 25
+
+
+def calculate_line_height(img):
+    bw_im = binarization.nlbin(img)
+    bounding_boxes = pageseg.segment(bw_im)['boxes']
+    height_accumulator = 0
+    for box in bounding_boxes:
+        height_accumulator = height_accumulator + box[3] - box[1]
+    return int(height_accumulator / len(bounding_boxes))
+
+
+line_height = calculate_line_height(Image.open("two_col.png"))
+# print(line_height)
+
+gap_box = (0, 0, char_width, line_height*6)
+print(gap_box)
