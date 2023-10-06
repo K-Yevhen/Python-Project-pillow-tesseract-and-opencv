@@ -42,3 +42,14 @@ first_pixel = img[0][0]
 new_img = cv.imread("two_col.png")
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
+# print(gray[2:4, 1:3])
+# print(np.count_nonzero(gray[2:4, 1:3]))
+
+white_metrics = np.full((12, 12), 255, dtype=np.uint8)
+# Image.fromarray(white_metrics, "L").show()
+# print(white_metrics)
+
+# white_metrics[:, 6] = np.full((1, 12), 0, dtype=np.uint8)
+# Image.fromarray(white_metrics, "L").show()
+# print(white_metrics)
+
