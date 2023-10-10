@@ -12,14 +12,20 @@ face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
 # print(help(zipfile))
 # img = Image.open('small_img.zip')
 
+images = {}
+name_list = []
 
 def open_zipfile(file):
-    with ZipFile(file=file, mode='r') as zf:
-        for file_info in zf.infolist():
-            print("File:", file_info.filename)
-        # zf.printdir()
-        with zf.open(file_info.filename) as images:
-            img = Image.open(images)
-            img.show()
+    with ZipFile(file=file, mode="r") as zf:
+        for files in zf.infolist():
+            # print("file:", files.filename)
+            name_list.append(files.filename)
+            images[files.filename] = Image.open(zf.open(files.filename))
 
-print(open_zipfile("small_img.zip"))
+
+if __name__ == '__main__':
+    open_zipfile('images.zip')
+
+
+print(open_zipfile("images.zip"))
+
